@@ -13,6 +13,8 @@ import receiveApi from '../messenger-api-helpers/receive';
 import logger from '../messenger-api-helpers/fba-logging';
 
 const router = express.Router();
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
 /**
  * This is used so that Facebook can verify that they have
@@ -22,7 +24,7 @@ const router = express.Router();
  * as well as in your servers environment.
  */
 router.get('/', (req, res) => {
-  if (req.query['hub.verify_token'] === process.env.WEBHOOK_TOKEN) {
+  if (req.query['hub.verify_token'] === VERIFY_TOKEN) {
     res.send(req.query['hub.challenge']);
   } else {
     res.send('Error, wrong token');
